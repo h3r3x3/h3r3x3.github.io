@@ -26,8 +26,10 @@ function setPhotoData(infos) {
     var html = $("#photoTpl").html(),
         item, str = [];
     for (var i = 0; i < infos.length; i++) {
+    	var ur = "https://farm"+infos[i].farm+".staticflickr.com/" + infos[i].server + "/"+ infos[i].id+ "_" + infos[i].secret + "_h.jpg";
+    	console.log(ur)
         str.push(strReplace(html, {
-            "{#photourl#}": infos[i].image.concat("?apikey=04e5c2f1b9e746e70eb148d52db5d4b5")
+            "{#photourl#}": ur
         }))
     }
     $("#photoList").append(str.join(""));
@@ -46,12 +48,12 @@ function strReplace(str, re, rt) {
     return str;
 }
 $.ajax({
-    url: "https://api.douban.com/v2/album/62067009/photos?apikey=04e5c2f1b9e746e70eb148d52db5d4b5",
-    dataType: 'jsonp',
+    url: "https://api.flickr.com/services/rest/?method=flickr.photosets.getPhotos&api_key=5ae809f96ea27a8d1592933f3c888fdf&photoset_id=72157662212303275&user_id=57362604%40N05&format=json&nojsoncallback=1",
+
     success: function(req) {
-        console.log(req.photos.length)
+        console.log(req.photoset.photo.length)
             // alert(req.photos);
-        setPhotoData(req.photos)
+        setPhotoData(req.photoset.photo)
     }
 })
 </script>
