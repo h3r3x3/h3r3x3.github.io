@@ -1,7 +1,64 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <title>CSS tutorial – 6</title>
+    <link rel=”stylesheet” type=”text/css” href=”css/style.css” />
+</head>
+
+<head>
+    <title>CSS tutorial – 6</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <link rel=”stylesheet” type=”text/css” href=”css/style.css” />
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <ul id="photoList">
+    </ul>
+    <div id="log"></div>
 </body>
+//
+<script type="text/javascript">
+function setPhotoData(infos) {
+    if (!infos.length) {
+        return;
+    }
+    var html = $("#photoTpl").html(),
+        item, str = [];
+    for (var i = 0; i < infos.length; i++) {
+        str.push(strReplace(html, {
+            "{#photourl#}": infos[i].large
+        }))
+    }
+    $("#photoList").append(str.join(""));
+}
+
+function strReplace(str, re, rt) {
+    if (rt !== undefined) {
+        return str.split(re).join(rt);
+    } else {
+        for (var key in re) {
+            if (re.hasOwnProperty(key)) {
+                str = strReplace(str, key, re[key]);
+            }
+        }
+    }
+    return str;
+}
+$.ajax({
+    url: "https://api.douban.com/v2/album/62067009/photos",
+    dataType: 'jsonp',
+    success: function(req) {
+        console.log(req.photos.length)
+            // alert(req.photos);
+        setPhotoData(req.photos)
+    }
+})
+</script>
+<script type="text/html" id="photoTpl">
+    <li align="center" class="photo">
+        <img src="{#photourl#}">
+    </li>
+</script>
+
 </html>
