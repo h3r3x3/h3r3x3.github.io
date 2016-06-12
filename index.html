@@ -8,7 +8,7 @@
 
 <head>
     <title>CSS tutorial – 6</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script type="text/javascript" src="http://zeptojs.com/zepto.min.js"></script>
     <link rel=”stylesheet” type=”text/css” href=”css/style.css” />
 </head>
 
@@ -27,7 +27,7 @@ function setPhotoData(infos) {
         item, str = [];
     for (var i = 0; i < infos.length; i++) {
         str.push(strReplace(html, {
-            "{#photourl#}": infos[i].large
+            "{#photourl#}": infos[i].large.concat("?apikey=04e5c2f1b9e746e70eb148d52db5d4b5")
         }))
     }
     $("#photoList").append(str.join(""));
@@ -46,7 +46,7 @@ function strReplace(str, re, rt) {
     return str;
 }
 $.ajax({
-    url: "https://api.douban.com/v2/album/62067009/photos",
+    url: "https://api.douban.com/v2/album/62067009/photos?apikey=04e5c2f1b9e746e70eb148d52db5d4b5",
     dataType: 'jsonp',
     success: function(req) {
         console.log(req.photos.length)
