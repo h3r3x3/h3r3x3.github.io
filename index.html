@@ -27,7 +27,7 @@ function setPhotoData(infos) {
         item, str = [];
     for (var i = 0; i < infos.length; i++) {
         str.push(strReplace(html, {
-            "{#photourl#}": infos[i].large.concat("?apikey=04e5c2f1b9e746e70eb148d52db5d4b5")
+            "{#photourl#}": infos[i].image.concat("?apikey=04e5c2f1b9e746e70eb148d52db5d4b5")
         }))
     }
     $("#photoList").append(str.join(""));
